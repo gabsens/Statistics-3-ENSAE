@@ -87,6 +87,12 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
       \item Show that if $(\rho_n)_{n\geq 1}$ is a sequence that goes to $\infty$ and $\rho_n T_n$ converges in distribution, then $T_n=\o(1)$.
       \item Suppose that $T_n$ goes to $0$ in probability. Let $g:\mathbb R^d\to \mathbb R$ be such that $g(x)=o(\|x\|_2^p)$ as $x\to 0$. Show that $g(T_n)=\o(\|T_n\|_2^p)$.
       \item Suppose that $T_n$ goes to $0$ in probability. Let $g:\mathbb R^d\to \mathbb R$ be such that $g(x)=O(\|x\|_2^p)$ as $x\to 0$. Show that $g(T_n)=\O(\|T_n\|_2^p)$
+      \item Let $(X_n)_{n\geq 1}$ be a sequence of r.v.'s such that $X_n\sim \mathcal P(\frac 1n)$.
+      \begin{enumerate}
+        \item Show that $X_n=\o(1)$.
+        \item Show that for any sequence $(u_n)_{n\geq 1}$ of positive reals, $X_n=\o(u_n)$.
+        \item Does $X_n$ converge almost surely ?
+      \end{enumerate}
     \end{enumerate}
     }%
 }
@@ -138,9 +144,29 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
   P(g(T_n)\geq 2A \|T_n\|_2^p) \leq P(\|T_n\|_2> R) \xrightarrow[n\to \infty]{} 0
   $$
   Consequently there is some $n_0$ such that $n\geq n_0 \implies P(\|T_n\|_2> R) \leq \varepsilon$. Hence $n\geq n_0 \implies P(g(T_n)\geq 2A \|T_n\|_2^p) \leq \varepsilon$ and we're done.
+
+  \item 
+  \begin{enumerate}
+    \item Let $\varepsilon \in (0,1)$. Since $X_n$ is integer-valued, we have $$P(X_n\geq \varepsilon) \leq P(X_n\geq 1) = 1-P(X_n=0) = 1-\exp(-\frac 1n) \xrightarrow[n\to \infty]{} 0$$
+    For $\varepsilon \geq 1$, $P(X_n\geq \varepsilon) \leq P(X_n\geq \frac 12) \xrightarrow[n\to \infty]{} 0$, hence $X_n$ converges in probability to $0$.
+    \item Let $(u_n)_{n\geq 1}$ be a sequence of positive reals and $\varepsilon >0$. Note that 
+    $$\begin{aligned}
+      P(X_n\geq \varepsilon u_n) &= P(X_n\geq \varepsilon u_n) 1_{u_n>\frac{1}{\varepsilon}} + \sum_{k=0}^\infty P(X_n\geq \varepsilon u_n) 1_{\frac{1}{2^k \varepsilon} \geq u_n>\frac{1}{2^{k+1} \varepsilon}}\\
+      &\leq P(X_n\geq 1) + \sum_{k=0}^\infty P\left(X_n\geq \frac{1}{2^{k+1}}\right) 1_{\frac{1}{2^k \varepsilon} \geq u_n>\frac{1}{2^{k+1} \varepsilon}}\\
+      &\leq P(X_n\geq 1) + \sum_{k=0}^\infty \left(1-\exp(-\frac 1n)\right) 1_{\frac{1}{2^k \varepsilon} \geq u_n>\frac{1}{2^{k+1} \varepsilon}}\\
+      &\leq P(X_n\geq 1) + \sum_{k=0}^\infty \frac 1n \; 1_{\frac{1}{2^k \varepsilon} \geq u_n>\frac{1}{2^{k+1} \varepsilon}}\\
+      &\leq P(X_n\geq 1) + \frac 1n\\
+      &\xrightarrow[n\to \infty]{} 0
+    \end{aligned}$$
+    Hence $X_n=\o(u_n)$.
+
+    \item Note that $P(X_n>\frac 12) = 1-\exp(-\frac 1n)\sim \frac 1n$, hence $\sum_n P(X_n>\frac 12) = \infty$.\\
+    \textbf{If} the $X_i$ are (at least pairwise) \textbf{independent}, Borel-Cantelli lemma yields \\
+    $P\left(\limsup_n \left(X_n>\frac 12\right)\right)=1$. For almost all $w$, we have $X_n(w)>\frac 12$ infinitely often, hence $X_n$ cannot converge almost surely to $0$. Thus $X_n$ does not converge almost surely.
+    \end{enumerate}
+  
 \end{enumerate}
 
-\newpage
 \section*{Problem 2}
 \noindent\fbox{%
     \parbox{\textwidth}{%
@@ -154,33 +180,24 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 }
 
 \begin{enumerate}
-  \item We recall two useful lemmas about convergence:\newline
-  \underline{Lemma 3}: $(X_n^1,\ldots,X_n^d)$ converges almost surely to $(X^1,\ldots,X^d)$ if and only if each real r.v. $X_n^i$ converges almost surely to $X^i$.\newline
-  \underline{Lemma 4}: $(X_n^1,\ldots,X_n^d)$ converges in probability to $(X^1,\ldots,X^d)$ if and only if each real r.v. $X_n^i$ converges in probability to $X^i$. \newline
-
-  By Lemmas $3$ and $4$ it suffices to prove the claim in the case $d=1$.\newline
-  Let $A = \{w\in \Omega,\; T_n(w)\xrightarrow[n\to \infty]{} T(w)\}$. Note that $A = \bigcap_{m\geq 1} \bigcup_{n\geq 1} \bigcap_{k\geq n} |T_k-T|\geq \frac 1m$.\newline By assumption, $P(A^c)=0$, hence $P(\bigcup_{m\geq 1} \bigcap_{n\geq 1} \bigcup_{k\geq n} |T_k-T|\geq \frac 1m) = 0$, which implies $\forall m\geq 1, P(\bigcap_{n\geq 1} \bigcup_{k\geq n} |T_k-T|\geq \frac 1m) = 0$.
+  \item Let $A = \{w\in \Omega,\; T_n(w)\xrightarrow[n\to \infty]{} T(w)\}$. Note that $A = \bigcap_{m\geq 1} \bigcup_{n\geq 1} \bigcap_{k\geq n} \|T_k-T\|\geq \frac 1m$.\newline By assumption, $P(A^c)=0$, hence $P(\bigcup_{m\geq 1} \bigcap_{n\geq 1} \bigcup_{k\geq n} \|T_k-T\|\geq \frac 1m) = 0$, which implies $\forall m\geq 1, P(\bigcap_{n\geq 1} \bigcup_{k\geq n} \|T_k-T\|\geq \frac 1m) = 0$.
 
   Let $\varepsilon >0$. There is some $m\geq 1$ such that $\varepsilon \geq \frac 1m$, hence 
-  $$P(|T_n-T|\geq \varepsilon) \leq P(|T_n-T|\geq \frac 1m) \leq P(\bigcup_{k\geq n} |T_k-T|\geq \frac 1m)$$
-  $\bigcup_{k\geq n} |T_k-T|\geq \frac 1m$ is a decreasing sequence of events, hence $$P(\bigcup_{k\geq n} |T_k-T|\geq \frac 1m) \xrightarrow[n\to \infty]{} P(\bigcap_{n\geq 1} \bigcup_{k\geq n} |T_k-T|\geq \frac 1m) = 0$$
-  Squeezing thus yields $P(|T_n-T|\geq \varepsilon) \xrightarrow[n\to \infty]{} 0$, hence $T_n$ converges to $T$ in probability.
+  $$P(\|T_n-T\|\geq \varepsilon) \leq P(\|T_n-T\|\geq \frac 1m) \leq P(\bigcup_{k\geq n} \|T_k-T\|\geq \frac 1m)$$
+  $\bigcup_{k\geq n} \|T_k-T\|\geq \frac 1m$ is a decreasing sequence of events, hence $$P(\bigcup_{k\geq n} \|T_k-T\|\geq \frac 1m) \xrightarrow[n\to \infty]{} P(\bigcap_{n\geq 1} \bigcup_{k\geq n} \|T_k-T\|\geq \frac 1m) = 0$$
+  Squeezing thus yields $P(\|T_n-T\|\geq \varepsilon) \xrightarrow[n\to \infty]{} 0$, hence $T_n$ converges to $T$ in probability.
 
   \item Let $f$ be a $K$-Lipschitz function bounded by some $A\geq 0$. Note that for any $\varepsilon >0$, $$|f(T_n)-f(T)|\leq K\varepsilon 1_{\|T_n-T\|_2\leq \varepsilon} + 2A \varepsilon 1_{\|T_n-T\|_2> \varepsilon}$$
   Thus $|E(f(T_n)) - E(f(T))|\leq E(|f(T_n)-f(T)|)\leq K\varepsilon + 2A \varepsilon P(\|T_n-T\|_2> \varepsilon)$.\newline
   Taking $\limsup$ on both side yields $\limsup_n |E(f(T_n)) - E(f(T))|\leq K\varepsilon $. Letting $\varepsilon \to 0$ proves that $\lim_n E(f(T_n)) = E(f(T))$. By the portmanteau theorem, $T_n$ converges to $T$ in distribution.
 
-  \item \underline{Lemma 5}: $T_n$ converges to $T$ in probability if and only if $E(\min(\|T_n-T\|_2,1))\xrightarrow[n\to \infty]{} 0$.\newline
-  \textit{Proof}: $\Rightarrow$ Let $\varepsilon >0$ and note that $$\begin{aligned}[t]
-    E(\min(\|T_n-T\|_2,1)) &= E(\min(\|T_n-T\|_2,1)1_{\|T_n-T\|_2\leq \varepsilon}) + E(\min(\|T_n-T\|_2,1)1_{\|T_n-T\|_2> \varepsilon})\\
-    &\leq E(\|T_n-T\|_2 1_{\|T_n-T\|_2\leq \varepsilon}) + E(1_{\|T_n-T\|_2> \varepsilon})\\
-    &\leq \varepsilon + P(\|T_n-T\|_2> \varepsilon)
-  \end{aligned}$$
-  Taking the $\limsup$ on both side yields $\limsup_n E(\min(\|T_n-T\|_2,1))\leq \varepsilon$ and letting $\varepsilon\to 0$ finishes the proof.\newline
-  $\Leftarrow$ Note that $E(\min(\|T_n-T\|_2,1)) = E(\|T_n-T\|_2 1_{\|T_n-T\|_2 < 1} + 1_{\|T_n-T\|_2 \geq 1})\geq E(1_{\|T_n-T\|_2 \geq 1})$, hence $P(\|T_n-T\|_2 \geq 1)\xrightarrow[n\to \infty]{} 0$. Let $\varepsilon \in (0,1)$. It's not hard to check that $$P(\|T_n-T\|_2 \geq \varepsilon) = P(\min(\|T_n-T\|_2,1)\geq \varepsilon)$$ and Markov's inequality yields $P(\|T_n-T\|_2 \geq \varepsilon) \leq \frac{E(\min(\|T_n-T\|_2,1))}{\varepsilon} \xrightarrow[n\to \infty]{} 0$. In the case $\varepsilon \geq 1$, simply note that $P(\|T_n-T\|_2 \geq \varepsilon)\leq P(\|T_n-T\|_2 \geq 1)\xrightarrow[n\to \infty]{} 0$.
-  \hfill $\square$
-  \\ \\
-  If $T=t$ a.s, note that the function $x\mapsto \min(\|x-t\|_2,1)$ is continuous and bounded, thus $E(\min(\|T_n-t\|_2,1)) \xrightarrow[n\to \infty]{} E(\min(\|t-t\|_2,1)) = 0$. By Lemma 5, $T_n$ converges in probability to $t$.
+  \item If the random vector $(T_n^1,\ldots, T_n^d)$ converges in distribution to some $T$ with $T=(t_1,\ldots,t_d)$ a.s., then by the continuous mapping theorem each $T_n^i$ converges in distribution to $\delta_{t_i}$.
+
+  We recall a useful lemma about convergence:\newline
+  \underline{Lemma 3}: $(X_n^1,\ldots,X_n^d)$ converges in probability to $(X^1,\ldots,X^d)$ if and only if each real r.v. $X_n^i$ converges in probability to $X^i$. \newline
+  By Lemma $3$ it suffices to prove the claim in the case $d=1$.\\
+  By the continuous mapping theorem applied with $x\mapsto |x-t|$, $|T_n-t|$ converges in distribution to $0$. Let $\varepsilon >0$ and note that $$P(|T_n-t|\geq \varepsilon) \leq P(|T_n-t|> \frac{\varepsilon}2) = 1-P(|T_n-t|\leq \frac{\varepsilon}2)$$
+  Since the cdf of $0$ is continuous at $\displaystyle \frac{\varepsilon}2$, the convergence of $|T_n-t|$ implies $\displaystyle P(|T_n-t|\leq \frac{\varepsilon}2) \xrightarrow[n\to \infty]{} 1$ and we're done.
 \end{enumerate}
 
 
