@@ -180,7 +180,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 }
 
 \begin{enumerate}
-  \item Let $A = \{w\in \Omega,\; T_n(w)\xrightarrow[n\to \infty]{} T(w)\}$. Note that $A = \bigcap_{m\geq 1} \bigcup_{n\geq 1} \bigcap_{k\geq n} \|T_k-T\|\geq \frac 1m$.\newline By assumption, $P(A^c)=0$, hence $P(\bigcup_{m\geq 1} \bigcap_{n\geq 1} \bigcup_{k\geq n} \|T_k-T\|\geq \frac 1m) = 0$, which implies $\forall m\geq 1, P(\bigcap_{n\geq 1} \bigcup_{k\geq n} \|T_k-T\|\geq \frac 1m) = 0$.
+  \item Let $A = \{w\in \Omega,\; T_n(w)\xrightarrow[n\to \infty]{} T(w)\}$. Note that $A = \bigcap_{m\geq 1} \bigcup_{n\geq 1} \bigcap_{k\geq n} \|T_k-T\|< \frac 1m$.\newline By assumption, $P(A^c)=0$, hence $P(\bigcup_{m\geq 1} \bigcap_{n\geq 1} \bigcup_{k\geq n} \|T_k-T\|\geq \frac 1m) = 0$, which implies $\forall m\geq 1, P(\bigcap_{n\geq 1} \bigcup_{k\geq n} \|T_k-T\|\geq \frac 1m) = 0$.
 
   Let $\varepsilon >0$. There is some $m\geq 1$ such that $\varepsilon \geq \frac 1m$, hence 
   $$P(\|T_n-T\|\geq \varepsilon) \leq P(\|T_n-T\|\geq \frac 1m) \leq P(\bigcup_{k\geq n} \|T_k-T\|\geq \frac 1m)$$
