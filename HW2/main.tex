@@ -1,0 +1,252 @@
+\documentclass[a4paper,11pt]{article}
+
+\usepackage{listings}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,amsthm,textcomp}
+\usepackage[utf8]{inputenc}  
+\usepackage[T1]{fontenc}  
+\usepackage{ listings }
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{stmaryrd}
+\usepackage{bbm}
+\graphicspath{ {images/} }
+
+\usepackage{geometry}
+\geometry{total={210mm,297mm},
+textwidth=16cm,%
+bindingoffset=0mm, top=20mm,bottom=20mm}
+
+\usepackage{etoolbox}
+\makeatletter
+\preto{\@verbatim}{\topsep=0pt \partopsep=3pt }
+\makeatother
+
+\linespread{1}
+
+\newcommand{\linia}{\rule{\linewidth}{0.5pt}}
+\setlength{\parindent}{0pt}
+
+% my own titles
+\makeatletter
+\renewcommand{\maketitle}{
+\begin{center}
+\vspace{2ex}
+{\huge \textsc{\@title}}
+\vspace{1ex}
+\\
+\linia\\
+\@author 
+\vspace{4ex}
+\end{center}
+}
+\makeatother
+%%%
+
+% custom footers and headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\chead{}
+\rhead{}
+
+\cfoot{}
+\rfoot{Page \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+%
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\let\o\relax
+\DeclareMathOperator*{\o}{\mathit o_{\mathbb P}}
+\let\O\relax
+\DeclareMathOperator*{\O}{\mathit O_{\mathbb P}}
+\DeclareMathOperator*{\Log}{Log}
+\DeclareMathOperator*{\rk}{rk}
+%%%----------%%%----------%%%----------%%%----------%%%
+
+\begin{document}
+
+\title{HW2: Asymptotics}
+
+\author{Gabriel ROMON}
+
+
+
+\maketitle
+
+\section*{Problem 1}
+
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+    Let $a_1,\ldots,a_q$ and $b_1,\ldots,b_q$ be vectors in $\mathbb R^d$ ($d,q\geq 1$). Suppose that $\sum_{i=1}^q b_i b_i^T$ is invertible. We want to prove that $$\sum_{i=1}^q a_i b_i^T \left(\sum_{i=1}^q b_i b_i^T\right)^{-1} \sum_{i=1}^q b_i a_i^T \preceq \sum_{i=1}^q a_i a_i^T$$
+    \begin{enumerate}
+      \item Show that $q\geq d$.
+      \item Let $C\in \mathbb R^{q\times q}$ defined by $C_{ij} = b_i^T \left(\sum_{i=1}^q b_i b_i^T\right)^{-1} b_j$. Show that $C$ is a projection matrix. 
+      \item Let $x\in \mathbb R^d$. Show that $x^T\left[\sum_{i=1}^q a_i b_i^T \left(\sum_{i=1}^q b_i b_i^T\right)^{-1} \sum_{i=1}^q b_i a_i^T\right]x$ rewrites as $y^TCy$ for some $y\in \mathbb R^q$. 
+      \item Conclude.
+      \end{enumerate}
+    }%
+}
+
+\begin{enumerate}
+  \item Since $\sum_{i=1}^q b_i b_i^T\in \mathbb R^{d\times d}$ is invertible, $d=\rk\left(\sum_{i=1}^q b_i b_i^T\right) \leq \sum_{i=1}^q \rk(b_i b_i^T) \leq \sum_{i=1}^q 1 \leq q$.
+
+  \item Let us show that $C^2=C$. Let $B =\sum_{i=1}^q b_i b_i^T$. 
+  $$\begin{aligned}(C^2)_{ij} &= \sum_{k=1}^q C_{ik} C_{kj}
+  = \sum_{k=1}^q b_i^T B^{-1} b_k b_k^T B^{-1} b_j\\
+  &=  b_i^T B^{-1} \left(\sum_{k=1}^q b_k b_k^T\right) B^{-1} b_j \\
+  &= b_i^T B^{-1} B B^{-1} b_j\\
+  &= C_{ij}
+  \end{aligned}
+  $$
+
+  \item $$\begin{aligned}
+  x^T\left[\sum_{i=1}^q a_i b_i^T B^{-1} \sum_{k=1}^q b_k a_k^T\right]x &= \sum_{i=1}^q \sum_{k=1}^q x^Ta_i C_{ik} a_k^Tx\\
+  &= \sum_{i=1}^q \sum_{k=1}^q y_i C_{ik} y_k\\
+  &= y^T C y \quad \text{where } y=\begin{pmatrix}
+    a_1^Tx \\ \vdots \\ a_q^Tx
+  \end{pmatrix} 
+  \end{aligned}
+  $$
+
+  \item Note that $x^T \sum_{i=1}^q a_i a_i^T x = y^T I_d y$, hence $$x^T \sum_{i=1}^q a_i a_i^T x - x^T\left[\sum_{i=1}^q a_i b_i^T B^{-1} \sum_{k=1}^q b_k a_k^T\right]x = y^T(I_d-C)y$$
+  Since $C$ satisfies $C^2=C$ its eigenvalues are either $0$ or $1$. The eigenvalues of the symmetric matrix $I_d-C$ are thus also $0$ or $1$, hence $I_d-C\succeq 0$, so $y^T(I_d-C)y \geq 0$. This holds for all $x$, hence 
+  $\sum_{i=1}^q a_i a_i^T \succeq \sum_{i=1}^q a_i b_i^T \left(\sum_{i=1}^q b_i b_i^T\right)^{-1} \sum_{i=1}^q b_i a_i^T$.
+\end{enumerate}
+
+
+
+\section*{Problem 2}
+
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+    Let $a,b$ be random vectors in $\mathbb R^d$ such that $E(\|a\|^2+\|b\|^2)<\infty$.
+    \begin{enumerate}
+      \item Show that $E(aa^T)$, $E(bb^T)$ and $E(ab^T)$ are well-defined. Show that the transpose of $E(ab^T)$ is $E(ba^T)$.\\
+      In the rest of the problem we assume that $E(bb^T)$ is invertible and we want to show that $$E(ab^T) E(bb^T)^{-1} E(ba^T) \preceq E(aa^T)$$
+      \item Show that the inequality of Problem 1 is a special case of this inequality. 
+      \item Let $M\in \mathbb R^{p\times p}$ a block matrix defined by $M=\begin{pmatrix}
+        A & B \\
+        B^T & C
+      \end{pmatrix}$ where $A\in \mathbb R^{k\times k}$, $B\in \mathbb R^{k\times l}$, $C\in \mathbb R^{l\times l}$ with $k+l=p$ and $A$ and $C$ symmetric. We assume that $C$ is invertible. The Schur complement of $C$ in $M$ is defined as $A-BC^{-1}B^T$. Show that $M\succeq 0$ if and only if $C$ and its Schur complement are $\succeq 0$.
+      \item Let $M\in \mathbb R^{2d\times 2d}$ the block matrix defined by $M=\begin{pmatrix}
+        E(aa^T) & E(ab^T) \\
+        E(ba^T) & E(bb^T)
+      \end{pmatrix}$
+      \begin{enumerate}
+        \item Show that $M\succeq 0$.
+        \item Conclude.
+      \end{enumerate}
+      \end{enumerate}
+    }%
+}
+
+\begin{enumerate}
+  \item Since $E(a_i^2) \leq E(\sum_{i=1}^d a_i^2) = E(\|a\|_2^2) < \infty$, the coordinates of $a$ are in $L^2$. Thus for each $1\leq i,j\leq d$, $E(|a_i a_j|)<\infty$. Therefore $$E(\|aa^T\|_1) \leq E\left(\sum_{i=1}^d \sum_{j=1}^d |a_i a_j| \right) = \sum_{i=1}^d \sum_{j=1}^d E(|a_i a_j|)<\infty$$
+  Similarly one proves that $E(\|bb^T\|_1)$, $E(\|ab^T\|_1)$ and $E(\|ba^T\|_1)$ are finite.\\
+  Note that $(E(ab^T))_{ji} = E(a_j b_i) = E(b_ia_j) = (E(ba^T))_{ij}$, hence $E(ab^T)$ is the transpose of $E(ba^T)$.
+
+  \item To avoid confusions, let $c_1,\ldots, c_q$ and $d_1,\ldots, d_q$ denote the vectors in the inequality of Problem 1. Let $\phi: \mathbb R^d\to \mathbb R^d, c_i \mapsto d_i$. Let $a$ be a random vector with distribution $\frac 1q \sum_{i=1}^q \delta_{c_i}$ and $b=\phi(a)$. $a$ and $b$ are bounded, and $E(ab^T) = E\left(\sum_{i=1}^q c_i d_i^T 1_{a=c_i}\right) = \frac 1q \sum_{i=1}^q  c_i d_i^T$.\\
+  Hence $E(ab^T) E(bb^T)^{-1} E(ba^T) \preceq E(aa^T)$ rewrites as 
+  $$\sum_{i=1}^q c_i d_i^T \left(\sum_{i=1}^q d_i d_i^T\right)^{-1} \sum_{i=1}^q d_i c_i^T \preceq \sum_{i=1}^q c_i c_i^T$$
+
+  \item Let $f:\mathbb R^k\times \mathbb R^l\to \mathbb R, (u,v)\mapsto \begin{pmatrix}u^T & v^T \end{pmatrix} \begin{pmatrix}
+        A & B \\
+        B^T & C\end{pmatrix} \begin{pmatrix}u \\ v \end{pmatrix} = v^TCv + 2v^TB^Tu + u^TAu$\\
+  If $M\succeq 0$, then for all $v\in \mathbb R^l$, $f(0,v)\geq 0$ i.e. $v^TCv \geq 0$, thus $C\succeq 0$.
+  Hence $v\mapsto v^TCv$ is convex, thus $f$ is convex as a function of $v$.\\
+  Let $u$ be fixed. Since $\nabla_v f(u,v) = 2Cv + 2B^Tu$, $v=-C^{-1}B^Tu$ is a critical point, hence $f(u,\cdot)$ is minimized at $-C^{-1}B^Tu$ with $0\leq f(u,-C^{-1}B^Tu) = u^T(A-BC^{-1}B^T)u$. This holds for all $u\in \mathbb R^k$, so the Schur complement of $C$ is $\succeq 0$.\\
+  \\
+  Suppose that $C\succeq 0$ and $A-BC^{-1}B^T\succeq 0$. For any $u\in \mathbb R^k$ and $v\in \mathbb R^l$, the previous reasoning shows that $f(u,v)\geq f(u,-C^{-1}B^Tu) = u^T(A-BC^{-1}B^T)u \geq 0$. Hence $M\succeq 0$.
+
+  \item \begin{enumerate}
+    \item We have 
+    $$\begin{aligned}
+      \begin{pmatrix}u^T & v^T \end{pmatrix} M \begin{pmatrix}u \\ v \end{pmatrix} 
+      &= u^TE(aa^T)u + 2u^TE(ab^T)v + v^TE(bb^T)v \\
+      &= E\left((u^Ta)^2+2(u^Ta)(b^Tv)+(b^Tv)^2 \right) \\
+      &= E\left((u^Ta+b^Tv)^2 \right)\\
+      &\geq 0
+    \end{aligned}$$
+    \item Remember that $E(bb^T)$ is invertible by assumption. By Question 3, the Schur complement of $E(bb^T)$ in $M$ is $\succeq 0$, that is $$E(aa^T)-E(ab^T) E(bb^T)^{-1} E(ba^T) \succeq 0$$
+  \end{enumerate}
+\end{enumerate}
+
+
+\section*{Problem 3}
+
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+    Let $(X_n)_{n\geq 1}$ a sequence of i.i.d. random variables having distribution $\mathcal N(\mu,1)$ where $\mu \in \mathbb R$. Let $\alpha \in (0,1)$. For $n\geq 1$, let $\hat \mu_n = \begin{cases}
+      \bar X_n & \text{if} |\bar X_n|>n^{-1/4}\\
+      \alpha \bar X_n & \text{otherwise}
+    \end{cases}$\\
+    We want to show that $\hat \mu_n$ is asymptotically normal around $\mu$, with asymptotic variance strictly smaller than to the reciprocal of Fisher's information, for some values of $\mu$.
+
+    \begin{enumerate}
+      \item Compute Fisher's information $I(\mu)$.
+      \item Suppose that $\mu=0$. 
+      \begin{enumerate}
+        \item Show that $P_0(|\bar X_n|>n^{-1/4}) \xrightarrow[n\to \infty]{} 0$
+        \item Deduce that $\forall t\in \mathbb R$, $P_0(\sqrt n \hat \mu_n \leq t)-P_0(\sqrt n \bar X_n \leq \frac{t}{\alpha})\xrightarrow[n\to \infty]{} 0$.
+        \item Conclude about $\hat \mu_n$ and compute its asymptotic variance.
+      \end{enumerate}
+      \item Suppose that $\mu>0$ (the case $\mu <0$ is similar).
+      \begin{enumerate}
+        \item Show that for $n$ sufficiently large, $P_{\mu}(|\bar X_n| \leq n^{-1/4})\leq \frac{1}{n(\mu -n^{-1/4})^2}$.
+        \item Deduce that $\forall t\in \mathbb R$, $P_{\mu}(\sqrt n (\hat \mu_n -\mu) \leq t)-P_\mu(\sqrt n (\bar X_n-\mu) \leq \frac{t}{\alpha})\xrightarrow[n\to \infty]{} 0$.
+        \item Conclude about $\hat \mu_n$ and compute its asymptotic variance.
+      \end{enumerate}
+      \item Conclude about Fisher's programme validity.
+      \end{enumerate}
+    }%
+}
+
+\begin{enumerate}
+  \item The likelihood for a single sample is $L(\mu) = \frac{1}{\sqrt{2\pi}} \exp\left(-\frac 12 (x-\mu)^2 \right)$, thus $(\log L)'' =-1$ and $I(\mu)=1$.
+  \item \begin{enumerate}
+    \item The CLT yields $n^{1/4} n^{1/4} \bar X_n \xrightarrow[n\to \infty]{(d)} \mathcal N(0,1)$, hence $n^{1/4} \bar X_n \xrightarrow[n\to \infty]{P} 0$, hence $$P_0(n^{1/4} |\bar X_n| >1) \xrightarrow[n\to \infty]{} 0$$
+    \item Let $t\in \mathbb R$. Note that 
+    $$\begin{aligned}
+    P_0(\sqrt n \hat \mu_n \leq t) &= P_0(\sqrt n \bar X_n \leq t \cap |\bar X_n|>n^{-1/4}) + P_0(\sqrt n \alpha \bar X_n \leq t \cap |\bar X_n|\leq n^{-1/4})\\
+    &= P_0(\sqrt n \bar X_n \leq t \cap |\bar X_n|>n^{-1/4}) + P_0(\sqrt n \alpha \bar X_n \leq t) - P(\sqrt n \alpha \bar X_n \leq t \cap |\bar X_n|> n^{-1/4})
+    \end{aligned}
+    $$
+    Hence $|P_0(\sqrt n \hat \mu_n \leq t)-P_0(\sqrt n \alpha \bar X_n \leq t)|\leq 2P_0(|\bar X_n|> n^{-1/4}) \xrightarrow[n\to \infty]{} 0$
+    \item The CLT combined with the continuous mapping theorem shows that $\sqrt n \alpha \bar X_n$ converges in distribution to $\mathcal N(0,\alpha^2)$, hence so does $\sqrt n \hat \mu_n$.\newline
+    $\hat \mu_n$ is thus asymptotically normal with asymptotic variance $\alpha^2$.
+  \end{enumerate}
+
+  \item \begin{enumerate}
+    \item Let $n\geq \frac 1{\mu^4}$. Note that 
+    $$\begin{aligned}
+      P_\mu(|\bar X_n| \leq n^{-1/4}) &\leq P(\mu -\bar X_n \geq \mu - n^{-1/4})\\
+      &= P_\mu(\bar X_n-\mu \geq \mu - n^{-1/4}) \qquad \bar X_n-\mu \text{ is symmetric}\\
+      &\leq \frac{V_\mu(\hat X_n)}{\left(\mu - n^{-1/4}\right)^2}\\
+      &=\frac 1n \frac{1}{\left(\mu - n^{-1/4}\right)^2}
+    \end{aligned}$$ 
+    \item Let $t\in \mathbb R$. Note that 
+    $$\begin{aligned}
+    P_\mu(\sqrt n (\hat \mu_n-\mu) \leq t) &= P_\mu(\sqrt n (\bar X_n-\mu) \leq t \cap |\bar X_n|>n^{-1/4}) + P_\mu(\sqrt n (\alpha \bar X_n-\mu) \leq t \cap |\bar X_n|\leq n^{-1/4})\\
+    &= P_\mu(\sqrt n (\bar X_n-\mu) \leq t) - P_\mu(\sqrt n (\bar X_n-\mu) \leq t \cap |\bar X_n|\leq n^{-1/4}) + o(1)\\
+    &= P_\mu(\sqrt n (\bar X_n-\mu) \leq t) + o(1)
+    \end{aligned}$$
+    \item By the CLT, $\sqrt n (\bar X_n-\mu)$ converges in distribution to $\mathcal N(0,1)$, hence so does \\$\sqrt n (\hat \mu_n-\mu)$. Therefore $\hat \mu_n$ is asymptotically normal with asymptotic variance $1$.
+  \end{enumerate}
+  \item Fisher's programme is not valid. There exists superefficient estimators: for some value of the parameter, the asymptotic variance is stricly smaller than the reciprocal of the information.
+\end{enumerate}
+
+
+\section*{Problem 4}
+
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+    Let $(X_n)_{n\geq 1}$ a sequence of i.i.d. random variables and let $F$ denote their cdf. Suppose that the median is unique and note it as $m$.\\
+    Suppose that $F(x)-\frac 12 \sim L_2(x-m)^{\alpha}$ as $x\xrightarrow[>]{} m$ and $\frac 12 - F(x) \sim L_1(m-x)^{\alpha}$ as $x\xrightarrow[<]{} m$ where $\alpha \in (0,1]$ and $L_1,L_2>0$. Let $\hat m_n = X_{(\lceil \frac n2 \rceil)}$.\\
+    Show that $n^{\frac 1{2\alpha}}(\hat m_n-m)$ converges in distribution. Interpret this result in terms of the rate of convergence of the empirical median to the median.
+    }%
+}
+
+\end{document}
