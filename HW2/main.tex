@@ -91,7 +91,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 }
 
 \begin{enumerate}
-  \item Since $\sum_{i=1}^q b_i b_i^T\in \mathbb R^{d\times d}$ is invertible, $d=\rk\left(\sum_{i=1}^q b_i b_i^T\right) \leq \sum_{i=1}^q \rk(b_i b_i^T) \leq \sum_{i=1}^q 1 \leq q$.
+  \item Since $\sum_{i=1}^q b_i b_i^T\in \mathbb R^{d\times d}$ is invertible, $d=\rk\left(\sum_{i=1}^q b_i b_i^T\right) \leq \sum_{i=1}^q \rk(b_i b_i^T) \leq \sum_{i=1}^q 1 = q$.
 
   \item Let us show that $C^2=C$. Let $B =\sum_{i=1}^q b_i b_i^T$. 
   $$\begin{aligned}(C^2)_{ij} &= \sum_{k=1}^q C_{ik} C_{kj}
@@ -101,8 +101,9 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
   &= C_{ij}
   \end{aligned}
   $$
+  Hence $C$ is a projection matrix. Besides, since $C$ is symmetric, the projection is orthogonal.
 
-  \item $$\begin{aligned}
+  \item Note that $$\begin{aligned}
   x^T\left[\sum_{i=1}^q a_i b_i^T B^{-1} \sum_{k=1}^q b_k a_k^T\right]x &= \sum_{i=1}^q \sum_{k=1}^q x^Ta_i C_{ik} a_k^Tx\\
   &= \sum_{i=1}^q \sum_{k=1}^q y_i C_{ik} y_k\\
   &= y^T C y \quad \text{where } y=\begin{pmatrix}
@@ -144,7 +145,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 }
 
 \begin{enumerate}
-  \item Since $E(a_i^2) \leq E(\sum_{i=1}^d a_i^2) = E(\|a\|_2^2) < \infty$, the coordinates of $a$ are in $L^2$. Thus for each $1\leq i,j\leq d$, $E(|a_i a_j|)<\infty$. Therefore $$E(\|aa^T\|_1) \leq E\left(\sum_{i=1}^d \sum_{j=1}^d |a_i a_j| \right) = \sum_{i=1}^d \sum_{j=1}^d E(|a_i a_j|)<\infty$$
+  \item Since $E(a_i^2) \leq E(\sum_{i=1}^d a_i^2) = E(\|a\|_2^2) < \infty$, the coordinates of $a$ are in $L^2(\mathbb R)$. Thus for each $1\leq i,j\leq d$, $E(|a_i a_j|)<\infty$. Therefore $$E(\|aa^T\|_1) \leq E\left(\sum_{i=1}^d \sum_{j=1}^d |a_i a_j| \right) = \sum_{i=1}^d \sum_{j=1}^d E(|a_i a_j|)<\infty$$
   Similarly one proves that $E(\|bb^T\|_1)$, $E(\|ab^T\|_1)$ and $E(\|ba^T\|_1)$ are finite.\\
   Note that $(E(ab^T))_{ji} = E(a_j b_i) = E(b_ia_j) = (E(ba^T))_{ij}$, hence $E(ab^T)$ is the transpose of $E(ba^T)$.
 
@@ -222,7 +223,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
   \item \begin{enumerate}
     \item Let $n\geq \frac 1{\mu^4}$. Note that 
     $$\begin{aligned}
-      P_\mu(|\bar X_n| \leq n^{-1/4}) &\leq P(\mu -\bar X_n \geq \mu - n^{-1/4})\\
+      P_\mu(|\bar X_n| \leq n^{-1/4}) &\leq P_\mu(\mu -\bar X_n \geq \mu - n^{-1/4})\\
       &= P_\mu(\bar X_n-\mu \geq \mu - n^{-1/4}) \qquad \bar X_n-\mu \text{ is symmetric}\\
       &\leq \frac{V_\mu(\hat X_n)}{\left(\mu - n^{-1/4}\right)^2}\\
       &=\frac 1n \frac{1}{\left(\mu - n^{-1/4}\right)^2}
