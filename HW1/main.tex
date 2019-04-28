@@ -163,12 +163,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
     \item Note that $P(X_n\geq 1) = 1-\exp(-\frac 1n)\sim \frac 1n$, hence $\sum_n P(X_n\geq 1) = \infty$.\\
     \textbf{If} the $X_i$ are (at least pairwise) \textbf{independent}, Borel-Cantelli lemma yields \\
     $P\left(\limsup_n \left(X_n\geq 1\right)\right)=1$. For almost all $w$, we have $X_n(w)\geq 1$ infinitely often, hence $X_n$ cannot converge almost surely to $0$. Thus $X_n$ does not converge almost surely.\\\\
-    If the $X_i$ are not independent, a.s. convergence to $0$ may occur. Let $(\xi_n)_{n\geq 1}$ be a sequence of independent r.v's such that $\xi_n \sim \mathcal P(\frac{1}{n}-\frac{1}{n+1})$. By Kolmogorov's two-series theorem, the series $\sum_{n\geq 1} \xi_n$ converges almost surely. Indeed 
-    $$\begin{aligned}
-    E(X_n) &= \frac{1}{n}-\frac{1}{n+1} \sim \frac{1}{n^2}\\
-    V(X_n) &= \frac{1}{n}-\frac{1}{n+1} \sim \frac{1}{n^2}
-    \end{aligned}
-    $$
+    If the $X_i$ are not independent, a.s. convergence to $0$ may occur. Let $(\xi_n)_{n\geq 1}$ be a sequence of independent r.v's such that $\xi_n \sim \mathcal P(\frac{1}{n}-\frac{1}{n+1})$. Since the summands are $\geq 0$ a.s., the series $\sum_{n\geq 1} \xi_n$ converges a.s. in $\overline{\mathbb R}$. Since $$E\left(\sum_{n\geq 1} \xi_n\right) = \sum_{n\geq 1} E(\xi_n ) = \sum_{n\geq 1} \frac{1}{n(n+1)} <\infty$$ $\sum_{n\geq 1} \xi_n$ converges a.s. in $\mathbb R$.
     Thus it makes sense to define $X_n=\sum_{i\geq n} \xi_i$, and by what precedes $X_n$ converges almost surely to $0$.\\
     It remains to prove that $X_n\sim \mathcal P(\frac 1n)$. 
     $$\begin{aligned}P(X_n=p) &= E(1_{X_n=p}) =  E(\lim_k1_{\sum_{i=n}^k\xi_i=p})\\
