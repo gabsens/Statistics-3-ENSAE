@@ -163,10 +163,10 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
     \item Note that $P(X_n\geq 1) = 1-\exp(-\frac 1n)\sim \frac 1n$, hence $\sum_n P(X_n\geq 1) = \infty$.\\
     \textbf{If} the $X_i$ are (at least pairwise) \textbf{independent}, Borel-Cantelli lemma yields \\
     $P\left(\limsup_n \left(X_n\geq 1\right)\right)=1$. For almost all $w$, we have $X_n(w)\geq 1$ infinitely often, hence $X_n$ cannot converge almost surely to $0$. Thus $X_n$ does not converge almost surely.\\\\
-    If the $X_i$ are not independent, a.s. convergence to $0$ may occur. Let $(\xi_n)_{n\geq 1}$ be a sequence of independent r.v's such that $\xi_n \sim \mathcal P(\frac{1}{n}-\frac{1}{n+1})$. By Kolmogorov's three series theorem, the series $\sum_{n\geq 1} \xi_n$ converges almost surely. Indeed 
-    $$\begin{aligned}P(\xi_n \geq 1) &= 1 - \exp(\frac{1}{n}-\frac{1}{n+1}) \sim \frac{1}{n^2}\\
-    E(X_n 1_{X_n\leq 1}) &= E(1_{X_n= 1}) = P(X_n= 1)=\left(\frac{1}{n}-\frac{1}{n+1}\right)\exp(\frac{1}{n}-\frac{1}{n+1}) \sim \frac{1}{n^2}\\
-    V(X_n 1_{X_n\leq 1}) &= E(X_n 1_{X_n\leq 1}) - E(X_n 1_{X_n\leq 1})^2 \sim \frac{1}{n^2}
+    If the $X_i$ are not independent, a.s. convergence to $0$ may occur. Let $(\xi_n)_{n\geq 1}$ be a sequence of independent r.v's such that $\xi_n \sim \mathcal P(\frac{1}{n}-\frac{1}{n+1})$. By Kolmogorov's two-series theorem, the series $\sum_{n\geq 1} \xi_n$ converges almost surely. Indeed 
+    $$\begin{aligned}
+    E(X_n) &= \frac{1}{n}-\frac{1}{n+1} \sim \frac{1}{n^2}\\
+    V(X_n) &= \frac{1}{n}-\frac{1}{n+1} \sim \frac{1}{n^2}
     \end{aligned}
     $$
     Thus it makes sense to define $X_n=\sum_{i\geq n} \xi_i$, and by what precedes $X_n$ converges almost surely to $0$.\\
