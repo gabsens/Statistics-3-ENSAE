@@ -64,11 +64,14 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \DeclareMathOperator*{\O}{\mathit O_{\mathbb P}}
 \DeclareMathOperator*{\Log}{Log}
 \DeclareMathOperator*{\rk}{rk}
+\DeclareMathOperator*{\inte}{int}
+\DeclareMathOperator*{\cl}{cl}
+
 %%%----------%%%----------%%%----------%%%----------%%%
 
 \begin{document}
 
-\title{HW2: Asymptotics}
+\title{HW2: Asymptotics 2}
 
 \author{Gabriel ROMON}
 
@@ -249,5 +252,59 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
     Show that $n^{\frac 1{2\alpha}}(\hat m_n-m)$ converges in distribution. Interpret this result in terms of the rate of convergence of the empirical median to the median.
     }%
 }
+\hfill \\\\
+\noindent Let $t\in \mathbb R$ and let us find the limit of $P(n^{\frac 1{2\alpha}}(\hat m_n-m) \leq t)$ as $n\to \infty$.\\
+For $1\leq i \leq n$, let $Y_i=1_{X_i\leq m+\frac t{n^{\frac 1{2\alpha}}}}$. Note that $\sum_{i=1}^n Y_i$ follows $\mathcal B(n,F(m+\frac t{n^{\frac 1{2\alpha}}}))$ and 
+$$P(n^{\frac 1{2\alpha}}(\hat m_n-m) \leq t) = P(\hat m_n \leq m+\frac t{n^{\frac 1{2\alpha}}}) 
+= P\left(\sum_{i=1}^n Y_i \geq \lceil \frac n2 \rceil\right) = P\left(\sum_{i=1}^n Y_i \geq  \frac n2\right)$$
+Let $N=\sum_{i=1}^n Y_i$. Computations analoguous to those carried out in Question 3.c) of Problem 3 in HW1 show that $\frac{1}{\sqrt n}\left(N-nF\left(m+\frac t{n^{\frac 1{2\alpha}}}\right) \right)$ converges in distribution to $\mathcal N(0,\frac 14)$, regardless of $L_1$ and $L_2$.\\
+Let $Z_n=\frac{1}{\sqrt n}\left(N-nF\left(m+\frac t{n^{\frac 1{2\alpha}}}\right) \right)$ and note that 
+$$P\left(\sum_{i=1}^n Y_i \geq  \frac n2\right) =  P\left[-Z_n\leq \sqrt n\left(F\left(m+\frac t{n^{\frac 1{2\alpha}}}\right)-\frac 12 \right)\right]$$
+When $t\geq 0$, the deterministic sequence $\sqrt n\left(F\left(m+\frac t{n^{\frac 1{2\alpha}}}\right)-\frac 12 \right)$ converges to $L_2t^\alpha$ 
+and $$P\left[-Z_n\leq \sqrt n\left(F\left(m+\frac t{n^{\frac 1{2\alpha}}}\right)-\frac 12 \right)\right] = P\bigg[\underbrace{-2Z_n \frac{L_2t^\alpha}{\sqrt n\left(F\left(m+\frac t{n^{\frac 1{2\alpha}}}\right)-\frac 12 \right)}}_{\xrightarrow[n\to \infty]{(d)} \mathcal N(0,1) \text{ by Slutsky}}  \leq 2L_2t^\alpha\bigg]$$
+hence $P(n^{\frac 1{2\alpha}}(\hat m_n-m) \leq t) \xrightarrow[n\to \infty]{} \Phi(2L_2t^\alpha)$ where $\Phi$ is the cdf of $\mathcal N(0,1)$.
+\\ \\
+When $t\leq 0$ the deterministic sequence converges to $-L_1(-t)^{\alpha}$ and 
+$$P\left[-Z_n\leq \sqrt n\left(F\left(m+\frac t{n^{\frac 1{2\alpha}}}\right)-\frac 12 \right)\right] = P\bigg[\underbrace{-2Z_n \frac{L_1(-t)^\alpha}{\sqrt n\left(\frac 12 - F\left(m+\frac t{n^{\frac 1{2\alpha}}}\right) \right)}}_{\xrightarrow[n\to \infty]{(d)} \mathcal N(0,1) \text{ by Slutsky}}  \leq -L_1(-t)^{\alpha} \bigg]$$
+hence $P(n^{\frac 1{2\alpha}}(\hat m_n-m) \leq t) \xrightarrow[n\to \infty]{} \Phi(-2L_1(-t)^\alpha)$\\
+\\
+The piecewise function $\varphi: t\mapsto \begin{cases}
+  \Phi(2L_2t^\alpha) &\text{if } t\geq 0\\
+  \Phi(-2L_1(-t)^\alpha) &\text{if } t\leq 0
+\end{cases}$ is continuous, increasing, with $\lim_\infty \varphi(x)=1$ and $\lim_{-\infty} \varphi(x)=0$. $\varphi$ is thus the cdf of some r.v. $Y$, and the cdf of $n^{\frac 1{2\alpha}}(\hat m_n-m)$ converges pointwise to $\varphi$. Since $\varphi$ is continuous, we may conclude that $$n^{\frac 1{2\alpha}}(\hat m_n-m) \xrightarrow[n\to \infty]{(d)} Y$$ where 
+$F_Y: t\mapsto \begin{cases}
+  \Phi(2L_2t^\alpha) &\text{if } t\geq 0\\
+  \Phi(-2L_1(-t)^\alpha) &\text{if } t\leq 0
+\end{cases}$
 
+
+
+\section*{Problem 5}
+
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+    Let $(X_n)_{n\geq 1}$ be a sequence i.i.d. r.v's with values in some interval $I\subset \mathbb R$ having a density $f$. Suppose that $f$ is positive over $I$ and continuous. Let $\phi: (x,t)\mapsto |x-t|-|x|$, $\Phi:t\mapsto E(\phi(X_1,t))$ and $\Phi_n:t\mapsto \frac 1n \sum_{i=1}^n \phi(X_i,t)$.
+    \begin{enumerate}
+      \item Show that $X_1$ has a unique median, say $m$, and that $m\in \inte I$.
+      \item Show that $\Phi$ is well-defined.
+      \item Show that $\Phi$ is twice-differentiable at $m$ with $\Phi''(m)>0$.
+      \item Show that $\Phi$ has a unique minimum attained at $m$.
+      \item Deduce that an empirical median $\hat m_n$ computed from $X_1,\ldots, X_n$ is asymptotically normal and compute its asymptotic variance.
+      \end{enumerate}
+    }%
+}
+
+\begin{enumerate}
+  \item Since $X_1$ has a density, its cdf $F$ is continuous. Note that $F$ (as a function defined on $\overline{\mathbb R}$) is $0$ over $[-\infty, \inf I]$ and $1$ over $[\sup I, \infty]$. Since $f>0$ over $I$, $F$ is strictly increasing over $\inte I$. By the intermediate value theorem, there exists $m\in \inte I$ such that $F(m)=\frac 12$ (which is necessary and sufficient for $m$ to be a median because $X_1$ is atomless). Since $F$ is strictly increasing over $\inte I$, there is no other median.
+  \item By the reversed triangle inequality, $||X-t|-|X|| \leq |t|$, thus $|X-t|-|X|$ is bounded and its expectation is well-defined.
+  \item Note that $E(|t-X|-|X|) = E(|-t-(-X)|-|-X|)$, so by replacing $t$ with $-t$ and $X$ with $-X$ we may suppose WLOG that $t\geq 0$ in the expressions to come.
+  $$\begin{aligned}
+    \Phi(t) &= E((t-X-X)1_{t-X>0}1_{X>0} + (t-X+X)1_{t-X>0}1_{X<0} + (X-t-X)1_{t-X<0})\\
+    &= E(t1_{t>X>0} -2X1_{t>X>0} + t1_{X<0} -t1_{t<X}) \qquad \text{since } t\geq 0\\
+    &= E(t1_{t>X} -2X1_{t>X>0} -t + t1_{t>X})\\
+    &= 2F(t) -t-2\int_0^t xf(x) dx
+  \end{aligned}$$
+  Note how all the inequalities are strict because $X$ is atomless. Since $f$ is continuous, $F$ is differentiable with $F'=f$, thus $\Phi$ is differentiable and computations yield $\Phi'=2F-1$. Hence $\Phi$ is also twice differentiable with $\Phi''=2f$. Since $f$ is positive over $I$ and $m\in \inte I$, we have $\Phi''(m)>0$.
+  \item We have $\Phi'(t)>0 \iff F(t)>\frac 12\iff t>m$, hence $\Phi$ has a unique minimum and it is attained at $m$.
+\end{enumerate}
 \end{document}
