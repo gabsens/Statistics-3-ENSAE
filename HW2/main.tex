@@ -302,9 +302,55 @@ $F_Y: t\mapsto \begin{cases}
     \Phi(t) &= E((t-X-X)1_{t-X>0}1_{X>0} + (t-X+X)1_{t-X>0}1_{X<0} + (X-t-X)1_{t-X<0})\\
     &= E(t1_{t>X>0} -2X1_{t>X>0} + t1_{X<0} -t1_{t<X}) \qquad \text{since } t\geq 0\\
     &= E(t1_{t>X} -2X1_{t>X>0} -t + t1_{t>X})\\
-    &= 2F(t) -t-2\int_0^t xf(x) dx
+    &= 2tF(t) -t-2\int_0^t xf(x) dx
   \end{aligned}$$
-  Note how all the inequalities are strict because $X$ is atomless. Since $f$ is continuous, $F$ is differentiable with $F'=f$, thus $\Phi$ is differentiable and computations yield $\Phi'=2F-1$. Hence $\Phi$ is also twice differentiable with $\Phi''=2f$. Since $f$ is positive over $I$ and $m\in \inte I$, we have $\Phi''(m)>0$.
-  \item We have $\Phi'(t)>0 \iff F(t)>\frac 12\iff t>m$, hence $\Phi$ has a unique minimum and it is attained at $m$.
+  Note how all the inequalities are strict because $X$ is atomless. For $t\leq 0$, replacing $t$ with $-t$ and $X$ with $-X$ yields 
+  $$\begin{aligned}
+    \Phi(t) &= E(-t1_{-t>-X} +2X1_{-t>-X>0} +t -t1_{-t>-X}) \\
+    &=t-2tP(X>t)+2\int_t^0xf(x)dx \\
+    &= 2tF(t) -t-2\int_0^t xf(x) dx
+  \end{aligned}$$
+  Hence $\Phi(t) = 2tF(t) -t-2\int_0^t xf(x) dx$ holds for all $t\in \mathbb R$.\\
+  Since $f$ is continuous, $F$ is differentiable with $F'=f$, thus $\Phi$ is differentiable and computations yield $\Phi'=2F-1$. Hence $\Phi$ is also twice differentiable with $\Phi''=2f$. Since $f$ is positive over $I$ and $m\in \inte I$, we have $\Phi''(m)>0$.
+  \item We have $\Phi'(t)>0 \iff F(t)>\frac 12\iff t>m$ and $\Phi'(t)<0 \iff t<m$ hence $\Phi$ has a unique minimum and it is attained at $m$.
+  \item 
+  Note that up to a constant $\Phi_n(t)=\frac 1n \sum_{i=1}^n |X_i-t|$, which is minimized in $t$ by any median $\hat m_n$ of $X_1,\ldots, X_n$ (take $\alpha=\frac 12$ in Question 1 of Problem 3 in HW1).\\
+  \\
+  For all $x\in \mathbb R$, $t\mapsto \phi(x,t)$ is convex, $\Phi$ has a unique minimum at $m$ and $\Phi$ is twice differentiable at $m$ with $\Phi''(m)=2f(m)>0$.\\
+  Let $x$ be fixed. A subgradient of $t\mapsto \phi(x,t)$ at $t$ is $\begin{cases}
+    -1 &\text{if } t<x\\
+    0 &\text{if } t=x\\
+    1 &\text{if } t>x
+  \end{cases}$, hence a subgradient of $t\mapsto \phi(X,t)$ at $t$ is $g(X,t)= 1_{t>X}-1_{t<X}$ and this subgradient is clearly measurable.\\
+  Since $X$ is atomless, $g(X,t)^2=1$ almost surely. By the theorem on convex M-estimation covered in class, $\hat m_n \xrightarrow[n\to \infty]{a.s.} m$ and $\sqrt n (\hat m_n-m) \xrightarrow[n\to \infty]{(d)} \mathcal N(0,\frac{1}{4f^2(m)})$.\\
+  This is consistent with the result of Question 3d) of Problem 3 in HW1 ($\alpha=\frac 12$).
 \end{enumerate}
+
+\newpage
+\section*{Problem 6}
+
+\noindent\fbox{%
+    \parbox{\textwidth}{%
+    Let $(X_n)_{n\geq 1}$ be a sequence i.i.d. r.v's with values in some interval $I\subset \mathbb R$ having a density $f$. Suppose that $f$ is positive over $I$ and continuous. Let $c>0$ and $$\ell_c:u\mapsto \begin{cases}
+      u^2 &\text{if } |u|\leq c\\
+      2c|u|-c^2 &\text{otherwise}
+    \end{cases}$$
+    Let $\phi:(x,t)\mapsto \ell_c(x-t)-2c|x|$, $\Phi:t\mapsto E(\phi(X_1,t))$ and $\Phi_n:t\mapsto \frac 1n \sum_{i=1}^n \phi(X_i,t)$.
+    \begin{enumerate}
+      \item Show that $\Phi$ is well-defined.
+      \item Show that $\Phi$ has a unique minimum attained at say $m$, with $m\in \inte I$. Show that $\Phi$ is twice-differentiable at $m$ and $\Phi''(m)>0$.
+      \item Show that for all $n\geq 1$, $\Phi_n$ admits a minimizer $\hat m_n$.
+      \item Show that $\hat m_n$ is asymptotically normal and compute its asymptotic variance.
+      \end{enumerate}
+    }%
+}
+
+\begin{enumerate}
+  \item Note that $$\ell_c(X-t)-2c|X| = E\left[(X-t)^21_{|X-t|\leq c} + \left(2c(|X-t|-|X|)-c^2 \right)1_{|X-t|>c} - 2c|X|1_{|X-t|\leq c}\right]$$
+  Each of the three summands is bounded since: \\$(X-t)^21_{|X-t|\leq c} \leq c^2$\\
+  $\big|2c(|X-t|-|X|)-c^2 \big|1_{|X-t|>c}\leq 2c|t|+c^2$\\
+  $2c|X|1_{|X-t|\leq c}\leq 2c(c+|t|)$.\\
+  Hence $\Phi$ is well-defined.
+\end{enumerate}
+
 \end{document}
