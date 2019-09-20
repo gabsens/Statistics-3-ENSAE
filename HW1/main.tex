@@ -197,7 +197,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
   Squeezing thus yields $P(\|T_n-T\|\geq \varepsilon) \xrightarrow[n\to \infty]{} 0$, hence $T_n$ converges to $T$ in probability.
 
   \item Let $f$ be a $K$-Lipschitz function bounded by some $A\geq 0$. Note that for any $\varepsilon >0$, $$|f(T_n)-f(T)|\leq K\varepsilon 1_{\|T_n-T\|_2\leq \varepsilon} + 2A 1_{\|T_n-T\|_2> \varepsilon}$$
-  Thus $|E(f(T_n)) - E(f(T))|\leq E(|f(T_n)-f(T)|)\leq K\varepsilon + 2A \varepsilon P(\|T_n-T\|_2> \varepsilon)$.\newline
+  Thus $|E(f(T_n)) - E(f(T))|\leq E(|f(T_n)-f(T)|)\leq K\varepsilon + 2A P(\|T_n-T\|_2> \varepsilon)$.\newline
   Taking $\limsup$ on both side yields $\limsup_n |E(f(T_n)) - E(f(T))|\leq K\varepsilon $. Letting $\varepsilon \to 0$ proves that $\lim_n E(f(T_n)) = E(f(T))$. By the portmanteau theorem, $T_n$ converges to $T$ in distribution.
 
   \item If the random vector $(T_n^1,\ldots, T_n^d)$ converges in distribution to some $T$ with $T=(t_1,\ldots,t_d)$ a.s., then by the continuous mapping theorem each $T_n^i$ converges in distribution to $\delta_{t_i}$.
